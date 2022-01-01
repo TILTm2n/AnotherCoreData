@@ -62,22 +62,53 @@ class DataStoreManager{
     }
     
     func obtainMainUser() -> User{
-        let company = Company(context: viewContext)
-        company.name = "Apple"
+        //тело запроса
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        //фильтр выборки
+        fetchRequest.predicate = NSPredicate(format: "isMain = true")
         
-        let user = User(context: viewContext)
-        user.name = "Eugene"
-        user.age = 22
-        user.company = company
+        //fetch всегда работает с массивами
+        if let users = try? viewContext.fetch(fetchRequest) as? [User], !users.isEmpty{
+            //если в БД нет,
+            return users.first!
+        }else{
+            //то создаем сами!
+            let company = Company(context: viewContext)
+            company.name = "Apple"
+            
+            let user = User(context: viewContext)
+            user.name = "Eugene"
+            user.age = 22
+            user.company = company
+            user.isMain = true
+            
+            do {
+                try viewContext.save()
+            } catch {
+                let error = error as NSError
+                print("\(error)")
+            }
+            
+            return user
+        }
+    }
+    
+    func updateMainUser(with name: String){
+        //тело запроса
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        //фильтр выборки
+        fetchRequest.predicate = NSPredicate(format: "isMain = true")
         
-        do {
-            try viewContext.save()
-        } catch {
-            let error = error as NSError
-            print("\(error)")
+        if let users = try? viewContext.fetch(fetchRequest) as? [User], !users.isEmpty{
+            
+            guard let mainUser = users.first else {return}
+            
+            mainUser.name = name
+            
+            try? viewContext.save()
+            
         }
         
-        return user
     }
     
 }

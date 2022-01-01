@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.swift
 //  CoreDataApp2
 //
-//  Created by Eugene on 20.12.2021.
+//  Created by Eugene on 01.01.2022.
 //
 //
 
@@ -16,8 +16,9 @@ extension User {
         return NSFetchRequest<User>(entityName: "User")
     }
 
-    @NSManaged public var name: String?
     @NSManaged public var age: Int16
+    @NSManaged public var name: String?
+    @NSManaged public var isMain: Bool
     @NSManaged public var company: Company?
 
 }
