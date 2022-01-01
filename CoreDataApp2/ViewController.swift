@@ -10,11 +10,15 @@ import CoreData
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
+    var dataStoreManager = DataStoreManager()
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     
-    var dataStoreManager = DataStoreManager()
+    @IBAction func removeDidPresent(_ sender: Any) {
+        dataStoreManager.removeMainUser()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +31,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
         nameLabel.sizeToFit()
         ageLabel.sizeToFit()
         
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
     }
     
+    @objc
+    func textFieldDidChange(){
+        print("\(textField.text)")
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text else {return}
+        dataStoreManager.updateMainUser(with: text)
+    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //закрываем клавиатуру при нажатии на return

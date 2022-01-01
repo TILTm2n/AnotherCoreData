@@ -39,6 +39,15 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="q55-PG-Lwa"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Azn-pl-9Uv">
+                                <rect key="frame" x="172" y="452" width="72" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="remove"/>
+                                <connections>
+                                    <action selector="removeDidPresent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IlM-BS-901"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

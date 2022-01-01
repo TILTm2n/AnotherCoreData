@@ -111,4 +111,21 @@ class DataStoreManager{
         
     }
     
+    func removeMainUser(){
+        //тело запроса
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        //фильтр выборки
+        fetchRequest.predicate = NSPredicate(format: "isMain = true")
+        
+        if let users = try? viewContext.fetch(fetchRequest) as? [User], !users.isEmpty{
+            
+            guard let mainUser = users.first else {return}
+            
+            viewContext.delete(mainUser)
+            
+            try? viewContext.save()
+            
+        }
+    }
+    
 }
